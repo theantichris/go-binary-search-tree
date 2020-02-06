@@ -1,9 +1,26 @@
 package main
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
+	t := &TreeNode{value: 8}
 
+	t.Insert(1)
+	t.Insert(2)
+	t.Insert(3)
+	t.Insert(4)
+	t.Insert(5)
+	t.Insert(6)
+	t.Insert(7)
+
+	t.PrintInOrder()
+	fmt.Println("")
+
+	fmt.Printf("min is %d\n", t.FindMin())
+	fmt.Printf("max is %d\n", t.FindMax())
 }
 
 // TreeNode represents a node in a binary search tree.
@@ -44,7 +61,7 @@ func (treeNode *TreeNode) Insert(value int) error {
 	return nil
 }
 
-// FindMin finds and returns the smallets value in the tree.
+// FindMin finds and returns the smallest value in the tree.
 func (treeNode *TreeNode) FindMin() int {
 	if treeNode.left == nil {
 		return treeNode.value
@@ -60,4 +77,15 @@ func (treeNode *TreeNode) FindMax() int {
 	}
 
 	return treeNode.right.FindMax()
+}
+
+// PrintInOrder transverses the tree and prints the values in order.
+func (treeNode *TreeNode) PrintInOrder() {
+	if treeNode == nil {
+		return
+	}
+
+	treeNode.left.PrintInOrder()
+	fmt.Println(treeNode.value)
+	treeNode.right.PrintInOrder()
 }
