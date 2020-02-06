@@ -61,6 +61,22 @@ func (treeNode *TreeNode) Insert(value int) error {
 	return nil
 }
 
+// Find finds a value in the tree.
+func (treeNode *TreeNode) Find(value int) (TreeNode, bool) {
+	if treeNode == nil {
+		return TreeNode{}, false
+	}
+
+	switch {
+	case value == treeNode.value:
+		return *treeNode, true
+	case value < treeNode.value:
+		return treeNode.left.Find(value)
+	default:
+		return treeNode.right.Find(value)
+	}
+}
+
 // FindMin finds and returns the smallest value in the tree.
 func (treeNode *TreeNode) FindMin() int {
 	if treeNode.left == nil {
