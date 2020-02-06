@@ -43,3 +43,21 @@ func (treeNode *TreeNode) Insert(value int) error {
 
 	return nil
 }
+
+// FindMin finds and returns the smallets value in the tree.
+func (treeNode *TreeNode) FindMin() int {
+	if treeNode.left == nil {
+		return treeNode.value
+	}
+
+	return treeNode.left.FindMin()
+}
+
+// FindMax finds and returns the largest value in the tree.
+func (treeNode *TreeNode) FindMax() int {
+	if treeNode.right == nil {
+		return treeNode.value
+	}
+
+	return treeNode.right.FindMax()
+}
