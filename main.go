@@ -16,6 +16,9 @@ func main() {
 	t.Insert(6)
 	t.Insert(7)
 
+	t.Delete(5)
+	t.Delete(7)
+
 	t.PrintInOrder()
 	fmt.Println("")
 
@@ -93,6 +96,55 @@ func (treeNode *TreeNode) FindMax() int {
 	}
 
 	return treeNode.right.FindMax()
+}
+
+// Delete removes a value from the tree.
+func (treeNode *TreeNode) Delete(value int) {
+	treeNode.remove(value)
+}
+
+func (treeNode *TreeNode) remove(value int) *TreeNode {
+	if treeNode == nil {
+		return nil
+	}
+
+	if value < treeNode.value {
+		treeNode.left = treeNode.left.remove(value)
+		return treeNode
+	}
+	if value > treeNode.value {
+		treeNode.right = treeNode.right.remove(value)
+		return treeNode
+	}
+
+	if treeNode.left == nil && treeNode.right == nil {
+		treeNode = nil
+		return nil
+	}
+
+	if treeNode.left == nil {
+		treeNode = treeNode.right
+		return treeNode
+	}
+	if treeNode.right == nil {
+		treeNode = treeNode.left
+		return treeNode
+	}
+
+	smallestValOnRight := treeNode.right
+
+	for {
+		if smallestValOnRight != nil && smallestValOnRight.left != nil {
+			smallestValOnRight = smallestValOnRight.left
+		} else {
+			break
+		}
+	}
+
+	treeNode.value = smallestValOnRight.value
+	treeNode.right = treeNode.right.remove(treeNode.value)
+
+	return treeNode
 }
 
 // PrintInOrder transverses the tree and prints the values in order.
